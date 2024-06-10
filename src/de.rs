@@ -31,7 +31,8 @@ pub use crate::read::IoRead;
 pub struct Deserializer<R> {
     read: R,
     scratch: Vec<u8>,
-    remaining_depth: u8,
+    // remaining_depth: u8,
+    remaining_depth: u16,
     #[cfg(feature = "float_roundtrip")]
     single_precision: bool,
     #[cfg(feature = "unbounded_depth")]
@@ -51,10 +52,12 @@ where
     ///   - Deserializer::from_slice
     ///   - Deserializer::from_reader
     pub fn new(read: R) -> Self {
+        std::println!("New recursion depth = 1000.");
         Deserializer {
             read,
             scratch: Vec::new(),
-            remaining_depth: 128,
+            // remaining_depth: 128,
+            remaining_depth: 1000,
             #[cfg(feature = "float_roundtrip")]
             single_precision: false,
             #[cfg(feature = "unbounded_depth")]
